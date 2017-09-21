@@ -1,3 +1,9 @@
+2.0.0
+        Removed sloth-logger
+        Removed babel
+        Fixed xml formatting when adding multiple conditional formatting rules.
+        Replaced deprecated lodash equals with the new lodash isEqual.
+
 1.2.1
         Fix Workbook#createStyle creating duplicates and slow performance [#100]
 

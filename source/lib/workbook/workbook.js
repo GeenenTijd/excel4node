@@ -8,7 +8,6 @@ const Fill = require('../style/classes/fill.js');
 const DXFCollection = require('./dxfCollection.js');
 const MediaCollection = require('./mediaCollection.js');
 const DefinedNameCollection = require('../classes/definedNameCollection.js');
-const SlothLogger = require('sloth-logger');
 const types = require('../types/index.js');
 const builder = require('./builder.js');
 const http = require('http');
@@ -54,14 +53,20 @@ class Workbook {
      * @param {Number} opts.defaultFont.size Font size. defaults to 12
      * @param {String} opts.defaultFont.family Font family. defaults to roman
      * @param {String} opts.dataFormat Specifies the format for dates in the Workbook. defaults to 'm/d/yy'
+     * @param {Object} opts.logger Logger that supports warn and error method, defaults to console
      * @returns {Workbook}
      */
     constructor(opts) {
         opts = opts ? opts : {};
 
-        this.logger = new SlothLogger.Logger({
-            logLevel: Number.isNaN(parseInt(opts.logLevel)) ? 0 : parseInt(opts.logLevel)
-        });
+        if (opts.logger) {
+            this.logger = opts.logger;
+        } else {
+            this.logger = {
+                warn: console.log,
+                error: console.error,
+            }
+        }
 
         this.opts = _.merge({}, workbookDefaultOpts, opts);
 
